@@ -1,6 +1,4 @@
-import React from 'react';
 import { initializeApp } from 'firebase/app'
-import {getStorage} from 'firebase/storage'
 
 export const firebaseApp = initializeApp({
   apiKey: "AIzaSyBHXmJhyUtniycOiCNq8HggJKJe-OTshEI",

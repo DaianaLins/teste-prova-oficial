@@ -2,8 +2,7 @@ import React from 'react'
 import { Container, Content } from './styles'
 import { 
   FaTimes, 
-  FaHome,
-  FaChartBar
+  FaHome
 } from 'react-icons/fa'
 import { MdOutlinePersonAddAlt } from "react-icons/md";
 

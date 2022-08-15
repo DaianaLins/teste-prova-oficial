@@ -49,7 +49,7 @@ const DetailsMovie = () => {
   const showSiderbar = () => setSidebar(!sidebar)
   return (
     <main >
-      <div onClick={showSiderbar} style={{ cursor: 'pointer', position:'absolute' }}><FaBars color='#d05d1b;' size={40} /></div>
+      <div onClick={showSiderbar} style={{ cursor: 'pointer', position:'absolute' }}><FaBars color='#d05d1b' size={40} /></div>
       {sidebar && <Sidebar active={setSidebar} />}
       <Container>
      <img src={filme?.image || filme?.imageUrl} height={650} alt="" />
@@ -57,6 +57,7 @@ const DetailsMovie = () => {
       </Container>
       <div className={styles.bannercontainer}>
       <div className={styles.bannercontent}>
+        <h2 ><span style={{fontSize: '90px', color: '#d05d1b',  fontWeight: 900, fontFamily: 'sans-serif'}}>C</span> show</h2>
         <h1 className={styles.bannertitle}>
           {filme?.title }
         </h1>

@@ -24,7 +24,6 @@ const Home = () =>{
     fetch(`https://api.themoviedb.org/3/movie/popular?api_key=b0a703dee6c190fd1b338d53ba60b802&language=pt-BR`)
       .then(response => response.json())
       .then(data => {
-        // console.log(data.results)
         setFilmes(data.results)
       })
     }, [])
@@ -36,7 +35,6 @@ const Home = () =>{
     }
     getFilmes()
   }, [])
-  console.log(filmes)
 
   return (
     <Container>
@@ -56,10 +54,9 @@ const Home = () =>{
           )}
         {
           filmesAdd.map((filme => {
-            console.log(filme.imageUrl)
             return (
               <Movie key={filme.id}>
-                <Link to={`/details/${filme.id}`}><img src={`${filme.imageUrl}`} alt="" /></Link>
+                <Link to={`/details/${filme.id}`}><img src={`${filme.imageUrl}`} height={270}alt="" /></Link>
                 <span>{filme.title}</span>
                 <span><AiOutlineStar/> {filme.stars}</span>
               </Movie>

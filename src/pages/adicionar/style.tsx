@@ -5,6 +5,21 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  img{
+    height: 450px;
+    margin-left: 10px;
+    margin-right: 30px;  
+    /* padding-right: 30px; */
+    display: flex;  
+    width: 25%;  
+    /* padding-top: 15px; */
+    border-radius: 5rem;
+    box-shadow: 0 0 20px 3px;
+    /* transition: 0.5s;  */
+    border-color:#d05d1b;
+  }
+  
 `;
 
 export const FormAd = styled.div`
@@ -29,6 +44,7 @@ export const FormAd = styled.div`
   input[type='file'] {
     ::-webkit-file-upload-button {
     background: #d05d1b;
+    border-color: #d05d1b;
     color: white;
     border-radius:10px;
     padding: 1em;
@@ -61,9 +77,10 @@ export const FormAd = styled.div`
   height: 40px;
   width: 100px;
   background-color: #d05d1b;
+  border-color: #d05d1b;
   color: white;
   margin-left: 20px;
   cursor: pointer;
   }
-
+ 
 `;

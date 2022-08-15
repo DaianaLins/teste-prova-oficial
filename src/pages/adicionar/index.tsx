@@ -1,8 +1,9 @@
 import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL, getStorage } from "firebase/storage";
+import { borderRadius } from "polished";
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, Router } from "react-router-dom";
 import Header from "../../components/header/header";
 import Sidebar from "../../components/sidebar";
 import SidebarItem from "../../components/sidebarItem";
@@ -24,21 +25,16 @@ const Form = () => {
   const db = getFirestore(firebaseApp)
   const storage = getStorage(firebaseApp);
   const filmeCollectionRef = collection(db, 'filmes')
-  const [teste, setTeste] = useState('')
-
-  // console.log({storage})
-  
+  const [teste, setTeste] = useState('')  
   
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleImageChange = (e: any) => {
-    console.log(e.target?.files[0])
     setFormData({ ...formData, image: e.target?.files[0]});
   };
 
-  console.log({formData})
   const handlePublish = () => {
     if (!formData.title || !formData.description || !formData.image) {
       alert("Please fill all the fields");
@@ -50,7 +46,6 @@ const Form = () => {
       `images/${Date.now()}${formData.image.name}`
     );
 
-    // console.log(formData.image)
     const uploadImage = uploadBytesResumable(storageRef, formData.image);
 
     uploadImage.on(
@@ -74,15 +69,14 @@ const Form = () => {
         });
 
         getDownloadURL(uploadImage.snapshot.ref).then((url) => {
-          // console.log({url})
           setTeste(url)
           const articleRef = collection(db, "filmes");
           addDoc(articleRef, {
             title: formData.title,
             author: formData.author,
             stars: formData.stars,
-            description: formData.description,
-            imageUrl: url
+            sinopse: formData.description,
+            image: url
           })
             .then(() => {
               console.log("Article added successfully", { type: "success" });
@@ -104,18 +98,20 @@ const Form = () => {
       <div onClick={showSiderbar} style={{ cursor: 'pointer' }}><FaBars color='#d05d1b;' size={40} /></div>
       {sidebar && <Sidebar active={setSidebar} />}
       <Container>
+          {teste && <img src={teste} alt="Imagem" height={200}  />}
         <FormAd >
           <label htmlFor="autor"><input type="text" placeholder="Autor"  onChange={(e) => handleChange(e)} name="author" /></label>
           <label htmlFor="titulo"><input type="text" placeholder="Título"  onChange={(e) => handleChange(e)} name="title" /></label>
-          <label htmlFor="descricao"><textarea name="description" placeholder="Descrição" onChange={(e) => handleChange(e)}  /></label>
+          <label htmlFor="descricao"><textarea name="sinopse" placeholder="Descrição" onChange={(e) => handleChange(e)}  /></label>
           <label htmlFor="avaliacao"><input type="number" placeholder="Avaliação"  onChange={(e) => handleChange(e)} name="stars" /></label>
           <input type="file" accept="image/*" name="image" onChange={(e) => handleImageChange(e)} placeholder="Selecione uma imagem" id="" />
           <div>
             <button onClick={handlePublish}>Postar</button>
             <Link to="/"><button>Cancelar</button></Link>
           </div>
-          {!formData.image && <p>{progress}%</p>}
-          {teste && <img src={teste} alt="Imagem" height={200} />}
+          <br/>
+          {!formData.image && <p style={{paddingTop: '20px', paddingLeft: '30px'}}>{progress}%</p>}
+          <br/>
         </FormAd>
       </Container>
     </main>

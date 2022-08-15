@@ -1,12 +1,9 @@
 import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL, getStorage } from "firebase/storage";
-import { borderRadius } from "polished";
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { Link, Router } from "react-router-dom";
-import Header from "../../components/header/header";
 import Sidebar from "../../components/sidebar";
-import SidebarItem from "../../components/sidebarItem";
 import { firebaseApp } from "../firbase";
 import { Container, FormAd } from "./style";
 
@@ -19,12 +16,9 @@ const Form = () => {
     stars: '',
     image: null,
   });
-  const [filmes, setFilmes] = useState([])
   const [progress, setProgress] = useState(0)
-  const imgPath = 'https://image.tmdb.org/t/p/w500'
   const db = getFirestore(firebaseApp)
   const storage = getStorage(firebaseApp);
-  const filmeCollectionRef = collection(db, 'filmes')
   const [teste, setTeste] = useState('')  
   
   const handleChange = (e: any) => {
@@ -37,7 +31,7 @@ const Form = () => {
 
   const handlePublish = () => {
     if (!formData.title || !formData.description || !formData.image) {
-      alert("Please fill all the fields");
+      alert("Por favor preencha todos os campos");
       return;
     }
 
@@ -57,7 +51,7 @@ const Form = () => {
         setProgress(progressPercent);
       },
       (err) => {
-        console.log(err);
+        alert(err);
       },
       () => {
         setFormData({
@@ -79,13 +73,14 @@ const Form = () => {
             imageUrl: url
           })
             .then(() => {
-              console.log("Article added successfully", { type: "success" });
-              alert('Filme adicionado com sucesso')
-              window.location.href = '/'
               setProgress(0);
+              setTimeout( ()=>{
+                alert('Filme adicionado com sucesso')
+                window.location.href = '/'
+              },2500)
             })
             .catch((err) => {
-              console.log("Error adding article", { type: "error" });
+              alert("Error ao adicionar filme");
             });
         });
       }

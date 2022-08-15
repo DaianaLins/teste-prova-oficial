@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Header from './components/header/header';
-import Nav from './components/nav';
 import './global.css';
 import Home from './pages/home';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'

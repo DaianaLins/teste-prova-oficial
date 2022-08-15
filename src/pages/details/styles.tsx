@@ -4,10 +4,12 @@ export const Container = styled.div`
   float:left;  
 
   img{
-    height: 550px;
+    height: 530px;
     margin-left: 250px;  
     display: flex;    
-    padding-top: 65px;
+    margin-top: 65px;
+    box-shadow: 0 0 20px 3px;
+    border-color:#d05d1b;
     border-radius: 1rem;
     transition: 0.5s; 
   }

@@ -10,13 +10,10 @@ export const Container = styled.div`
     height: 450px;
     margin-left: 10px;
     margin-right: 30px;  
-    /* padding-right: 30px; */
     display: flex;  
     width: 25%;  
-    /* padding-top: 15px; */
     border-radius: 5rem;
     box-shadow: 0 0 20px 3px;
-    /* transition: 0.5s;  */
     border-color:#d05d1b;
   }
   

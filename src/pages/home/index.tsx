@@ -3,17 +3,12 @@ import { firebaseApp } from "../firbase";
 import { Container, MovieList, Movie } from "./styles";
 import { collection, getDocs, getFirestore } from 'firebase/firestore'
 import {AiOutlineStar} from 'react-icons/ai'
-import { iFilmes } from "../../types/filmes/filmes";
-import Nav from "../../components/nav";
 import Header from "../../components/header/header";
 import { Link } from "react-router-dom";
+import Footer from "../../components/Footer/footer";
 
-// type moviesProps = {
-// 	filmes: Array<iFilmes>
-// }
 
 const Home = () =>{
-  // const {filmes} = props
   const [filmes, setFilmes] = useState<any[]>([]);
   const [filmesAdd, setFilmesAdd] = useState<any[]>([]);
   const db = getFirestore(firebaseApp)
@@ -64,6 +59,7 @@ const Home = () =>{
           })
           )}
       </MovieList>
+      <Footer/>
     </Container>
   )
 }

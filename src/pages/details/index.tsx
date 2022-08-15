@@ -6,6 +6,7 @@ import { Container } from "./styles";
 import styles from './details.module.css'
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { firebaseApp } from "../firbase";
+import {BsPerson} from 'react-icons/bs'
 
 const DetailsMovie = () => {
   const { id } = useParams()
@@ -28,8 +29,6 @@ const DetailsMovie = () => {
       if(idN.id == id) setFilme(idN)
     })
   }
-  console.log(filme)
-  
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=b0a703dee6c190fd1b338d53ba60b802&language=pt-BR`)
       .then(response => response.json())
@@ -71,7 +70,10 @@ const DetailsMovie = () => {
         </div>
         <div className={styles.bannerdescription}>
           <h2>{truncate(filme.sinopse || filme.description, 150)}</h2>
+          <br />
+          <p><BsPerson/> Autor: {filme.author}</p>
         </div>
+
         {/* adicionadoo por */}
       </div>
       </div>

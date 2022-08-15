@@ -9,7 +9,6 @@ import SidebarItem from "../../components/sidebarItem";
 import { firebaseApp } from "../firbase";
 import { Container, FormAd } from "./style";
 
-
 const Form = () => {
   const [sidebar, setSidebar] = useState(false)
   const [formData, setFormData] = useState<any>({
@@ -17,7 +16,7 @@ const Form = () => {
     title: '',
     description: '',
     stars: '',
-    image: '',
+    image: null,
   });
   const [filmes, setFilmes] = useState([])
   const [progress, setProgress] = useState(0)
@@ -27,11 +26,15 @@ const Form = () => {
   const filmeCollectionRef = collection(db, 'filmes')
   const [teste, setTeste] = useState('')
 
+  // console.log({storage})
+  
+  
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleImageChange = (e: any) => {
+    console.log(e.target?.files[0])
     setFormData({ ...formData, image: e.target?.files[0]});
   };
 
@@ -44,10 +47,11 @@ const Form = () => {
 
     const storageRef = ref(
       storage,
-      `/images/${Date.now()}${formData.image}`
+      `images/${Date.now()}${formData.image.name}`
     );
 
-    const uploadImage = uploadBytesResumable(storageRef, formData.image.name);
+    // console.log(formData.image)
+    const uploadImage = uploadBytesResumable(storageRef, formData.image);
 
     uploadImage.on(
       "state_changed",
@@ -70,6 +74,7 @@ const Form = () => {
         });
 
         getDownloadURL(uploadImage.snapshot.ref).then((url) => {
+          // console.log({url})
           setTeste(url)
           const articleRef = collection(db, "filmes");
           addDoc(articleRef, {

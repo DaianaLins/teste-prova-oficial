@@ -7,5 +7,8 @@ export const firebaseApp = initializeApp({
   authDomain: "testecreathus-7d591.firebaseapp.com",
   projectId: "testecreathus-7d591",
   storageBucket: "testecreathus-7d591.appspot.com",
+  messagingSenderId: "290467850217",
+  appId: "1:290467850217:web:2403abfc21c4a58a330d78",
+  measurementId: "G-TRW10G0X3K"
 });
 

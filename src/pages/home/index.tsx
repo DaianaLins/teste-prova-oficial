@@ -59,7 +59,7 @@ const Home = () =>{
             console.log(filme.imageUrl)
             return (
               <Movie key={filme.id}>
-                <Link to={`/details/${filme.id}`}><img src={`${filme.imageUrl}`}  alt="" /></Link>
+                <Link to={`/details/${filme.id}`}><img src={`${filme.imageUrl}`} alt="" /></Link>
                 <span>{filme.title}</span>
                 <span><AiOutlineStar/> {filme.stars}</span>
               </Movie>

@@ -1,8 +1,8 @@
 import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL, getStorage } from "firebase/storage";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Sidebar from "../../components/sidebar";
 import { firebaseApp } from "../firbase";
 import { Container, FormAd } from "./style";

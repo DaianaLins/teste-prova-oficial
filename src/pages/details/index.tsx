@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import Sidebar from "../../components/sidebar";
 import { Container } from "./styles";
 import styles from './details.module.css'
@@ -13,7 +13,6 @@ const DetailsMovie = () => {
   const [filme, setFilme] = useState<any>({})
   const [sidebar, setSidebar] = useState(false)
   const imgPath = 'https://image.tmdb.org/t/p/w500'
-  const [movie, setMovie] = React.useState({});
   const db = getFirestore(firebaseApp)
 
   const filmeCollectionRef = collection(db, 'filmes')

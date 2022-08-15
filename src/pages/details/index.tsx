@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Sidebar from "../../components/sidebar";
 import { Container } from "./styles";
 import styles from './details.module.css'
@@ -23,10 +23,12 @@ const DetailsMovie = () => {
 
   const getFilmes = async () => {
     const data = await getDocs(filmeCollectionRef)
-    const [comp] = data.docs.map((doc) => ({ ...doc.data(), id: id })) 
-    console.log(comp.id, id)
-    setFilme(comp)
+    const comp = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })) 
+    comp.map((idN)=>{
+      if(idN.id == id) setFilme(idN)
+    })
   }
+  console.log(filme)
   
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=b0a703dee6c190fd1b338d53ba60b802&language=pt-BR`)
@@ -52,7 +54,9 @@ const DetailsMovie = () => {
       <div onClick={showSiderbar} style={{ cursor: 'pointer', position:'absolute' }}><FaBars color='#d05d1b' size={40} /></div>
       {sidebar && <Sidebar active={setSidebar} />}
       <Container>
-     <img src={filme?.image || filme?.imageUrl} height={650} alt="" />
+      {filme.image ? (<img src={filme?.image} alt="" /> ) : 
+      (<img src={filme?.imageUrl} alt="" style={{margin: 0, marginTop: '50px', marginLeft: '250px'}} height={550} width={300} />)
+      }
 
       </Container>
       <div className={styles.bannercontainer}>
@@ -62,8 +66,8 @@ const DetailsMovie = () => {
           {filme?.title }
         </h1>
         <div className={styles.bannerbuttonscontainer}>
-          <button className={styles.bannerbutton}>Assistir</button>
-          <button className={styles.bannerbutton}>Minha Lista</button>
+          <a href={`https://www.youtube.com/results?search_query=${filme?.title}`}><button className={styles.bannerbutton} >Assistir trailer</button></a>
+          <a href={`https://www.themoviedb.org/search?language=pt-BR&query=${filme?.title}`}><button className={styles.bannerbutton}>Mais informações</button></a> 
         </div>
         <div className={styles.bannerdescription}>
           <h2>{truncate(filme.sinopse || filme.description, 150)}</h2>

@@ -75,11 +75,13 @@ const Form = () => {
             title: formData.title,
             author: formData.author,
             stars: formData.stars,
-            sinopse: formData.description,
-            image: url
+            description: formData.description,
+            imageUrl: url
           })
             .then(() => {
               console.log("Article added successfully", { type: "success" });
+              alert('Filme adicionado com sucesso')
+              window.location.href = '/'
               setProgress(0);
             })
             .catch((err) => {
@@ -89,8 +91,6 @@ const Form = () => {
       }
     );
   };
-
-  console.log({teste})
 
   const showSiderbar = () => setSidebar(!sidebar)
   return (
@@ -102,7 +102,7 @@ const Form = () => {
         <FormAd >
           <label htmlFor="autor"><input type="text" placeholder="Autor"  onChange={(e) => handleChange(e)} name="author" /></label>
           <label htmlFor="titulo"><input type="text" placeholder="Título"  onChange={(e) => handleChange(e)} name="title" /></label>
-          <label htmlFor="descricao"><textarea name="sinopse" placeholder="Descrição" onChange={(e) => handleChange(e)}  /></label>
+          <label htmlFor="descricao"><textarea name="description" placeholder="Descrição" onChange={(e) => handleChange(e)}  /></label>
           <label htmlFor="avaliacao"><input type="number" placeholder="Avaliação"  onChange={(e) => handleChange(e)} name="stars" /></label>
           <input type="file" accept="image/*" name="image" onChange={(e) => handleImageChange(e)} placeholder="Selecione uma imagem" id="" />
           <div>

@@ -1,59 +1,97 @@
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import React, { useState } from "react";
+import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL, getStorage } from "firebase/storage";
+import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Header from "../../components/header/header";
 import Sidebar from "../../components/sidebar";
 import SidebarItem from "../../components/sidebarItem";
-import { firebaseApp, storage } from "../firbase";
+import { firebaseApp } from "../firbase";
 import { Container, FormAd } from "./style";
+
 
 const Form = () => {
   const [sidebar, setSidebar] = useState(false)
-  const [author, setAuthor] = useState("")
-  const [title, setTitle] = useState("")
-  const [descrition, setDescrition] = useState("")
-  const [stars, setStars] = useState('')
-  const [img, setImg] = useState("")
+  const [formData, setFormData] = useState<any>({
+    author: '',
+    title: '',
+    description: '',
+    stars: '',
+    image: '',
+  });
   const [filmes, setFilmes] = useState([])
   const [progress, setProgress] = useState(0)
   const imgPath = 'https://image.tmdb.org/t/p/w500'
   const db = getFirestore(firebaseApp)
+  const storage = getStorage(firebaseApp);
   const filmeCollectionRef = collection(db, 'filmes')
+  const [teste, setTeste] = useState('')
 
-  const handleUpload = (event: any) => {
-    console.log(event)
-    const file = event.target.value
-    console.log(file)
-    if (!file) return
-    const storageRef = ref(storage, `image/${file.name}`)
-    const uploadTask = uploadBytesResumable(storageRef, file)
-    uploadTask.on('state_changed',
-      snapshot => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes)
-        setProgress(progress)
+  const handleChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = (e: any) => {
+    setFormData({ ...formData, image: e.target?.files[0]});
+  };
+
+  console.log({formData})
+  const handlePublish = () => {
+    if (!formData.title || !formData.description || !formData.image) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    const storageRef = ref(
+      storage,
+      `/images/${Date.now()}${formData.image}`
+    );
+
+    const uploadImage = uploadBytesResumable(storageRef, formData.image.name);
+
+    uploadImage.on(
+      "state_changed",
+      (snapshot) => {
+        const progressPercent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progressPercent);
       },
-      erro => {
-        alert(erro)
+      (err) => {
+        console.log(err);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImg(downloadURL);
-          submitFilme()
-          console.log(downloadURL)
+        setFormData({
+          author: '',
+          stars: '',
+          title: "",
+          description: "",
+          image: "",
+        });
+
+        getDownloadURL(uploadImage.snapshot.ref).then((url) => {
+          setTeste(url)
+          const articleRef = collection(db, "filmes");
+          addDoc(articleRef, {
+            title: formData.title,
+            author: formData.author,
+            stars: formData.stars,
+            description: formData.description,
+            imageUrl: url
+          })
+            .then(() => {
+              console.log("Article added successfully", { type: "success" });
+              setProgress(0);
+            })
+            .catch((err) => {
+              console.log("Error adding article", { type: "error" });
+            });
         });
       }
-    )
-  }
-  console.log(img)
+    );
+  };
 
-  const submitFilme = async () => {
-    console.log({ author, title, descrition})
-    const filme = await addDoc(filmeCollectionRef, { author, title, descrition, stars, img})
-
-    // console.log(filme)
-  }
+  console.log({teste})
 
   const showSiderbar = () => setSidebar(!sidebar)
   return (
@@ -61,18 +99,18 @@ const Form = () => {
       <div onClick={showSiderbar} style={{ cursor: 'pointer' }}><FaBars color='#d05d1b;' size={40} /></div>
       {sidebar && <Sidebar active={setSidebar} />}
       <Container>
-        <FormAd onSubmit={submitFilme}>
-          <label htmlFor="autor"><input type="text" placeholder="Autor" value={author} onChange={(e) => setAuthor(e.target.value)} name="autor" /></label>
-          <label htmlFor="titulo"><input type="text" placeholder="Título" value={title} onChange={(e) => setTitle(e.target.value)} name="titulo" /></label>
-          <label htmlFor="descricao"><textarea name="descricao" placeholder="Descrição" value={descrition} onChange={(e) => setDescrition(e.target.value)} /></label>
-          <label htmlFor="avaliacao"><input type="number" placeholder="Avaliação" value={stars} onChange={(e) => setStars(e.target.value)} name="stars" /></label>
-          <input type="file" name="img" onChange={(e) => handleUpload(e)} placeholder="Selecione uma imagem" id="" />
+        <FormAd >
+          <label htmlFor="autor"><input type="text" placeholder="Autor"  onChange={(e) => handleChange(e)} name="author" /></label>
+          <label htmlFor="titulo"><input type="text" placeholder="Título"  onChange={(e) => handleChange(e)} name="title" /></label>
+          <label htmlFor="descricao"><textarea name="description" placeholder="Descrição" onChange={(e) => handleChange(e)}  /></label>
+          <label htmlFor="avaliacao"><input type="number" placeholder="Avaliação"  onChange={(e) => handleChange(e)} name="stars" /></label>
+          <input type="file" accept="image/*" name="image" onChange={(e) => handleImageChange(e)} placeholder="Selecione uma imagem" id="" />
           <div>
-            <button type="submit">Postar</button>
+            <button onClick={handlePublish}>Postar</button>
             <Link to="/"><button>Cancelar</button></Link>
           </div>
-          {!img && <p>{progress}%</p>}
-        {img && <img src={img} alt="Imagem" height={200} />}
+          {!formData.image && <p>{progress}%</p>}
+          {teste && <img src={teste} alt="Imagem" height={200} />}
         </FormAd>
       </Container>
     </main>

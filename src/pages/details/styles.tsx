@@ -1,18 +1,20 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  display:flex;
-  justify-content:center;
-  align-items: center;
-  flex-direction: column;
+  float:left;  
 
   img{
-  display:flex;
-  justify-content:center;
-  align-items: center;
-  width: 20%;
+    height: 650px;
+    margin-left: 250px;  
+    display: flex;    
+    padding-top: 65px;
+    border-radius: 1rem;
+    transition: 0.5s; 
   }
-  h1{
-    
-  }
+  img:hover{
+      transform: scale(1.1);
+      filter: brightness(1.2);
+      transition: 0.5s;
+      
+    } 
 `

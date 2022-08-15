@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <Container>
-      <div onClick={showSiderbar} style={{cursor:'pointer'}}><FaBars color='#d05d1b;' /></div>
+      <div onClick={showSiderbar} style={{cursor:'pointer'}}><FaBars color='#d05d1b;' size={40} /></div>
       {sidebar && <Sidebar active={setSidebar}  />}
       <h1>Últimos filmes adicionados</h1>
     </Container>

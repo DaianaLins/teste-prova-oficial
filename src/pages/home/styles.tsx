@@ -19,6 +19,7 @@ export const MovieList = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   column-gap: 3rem;
   row-gap: 4rem;
+  padding: 2rem;
 
 `
 
@@ -44,12 +45,13 @@ export const Movie = styled.li`
 
     a{
       color: #d05d1b;
-      transition: all 0.3s;
+      transition: all 0.5s;
     }
 
     a:hover{
       transform: scale(1.1);
       filter: brightness(1.2);
+      transition: 0.5s;
       
     }   
 `

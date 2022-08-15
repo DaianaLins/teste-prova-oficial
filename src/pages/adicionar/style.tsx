@@ -22,7 +22,7 @@ export const FormAd = styled.div`
     border-color: #d05d1b;
     color: white;
     -ms-input-placeholder{font-size:16px;}
-    background-color: black;
+    background-color: rgb(3, 7, 26);
     cursor: pointer;
   }
 
@@ -35,7 +35,16 @@ export const FormAd = styled.div`
     cursor: pointer;
   }
   }
-  
+  input[type='number'] {
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border-color: #d05d1b;
+    color: white;
+  }
+
   textarea{
     width: 600px;
     height: 90px;
@@ -43,7 +52,7 @@ export const FormAd = styled.div`
     border-radius: 5px;
     border-color: #d05d1b;
     color: white;
-    background-color: black;
+    background-color: rgb(3, 7, 26);
     resize: none;
   }
 

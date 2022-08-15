@@ -5,7 +5,7 @@ interface sidebarProps{
 }
 
 export const Container = styled.div<sidebarProps>`
-  background-color: black;
+  background-color: rgb(10, 17, 50);
   position: fixed;
   height: 100%;
   top: 0px;
@@ -15,8 +15,8 @@ export const Container = styled.div<sidebarProps>`
   animation: showSidebar .4s;
   > svg {
     position: fixed;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     margin-top: 32px;
     margin-left: 32px;
     cursor: pointer;

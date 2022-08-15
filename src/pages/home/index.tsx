@@ -28,6 +28,13 @@ const Home = () =>{
       })
   }, [])
 
+  useEffect(() => {
+    const getFilmes = async () => {
+      const data = await getDocs(filmeCollectionRef)
+      console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+    getFilmes()
+  }, [])
   console.log(filmes)
 
   return (

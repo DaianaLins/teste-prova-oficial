@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "https://daianalins.github.io/teste-prova-oficial/static/css/main.e13dda25.css",
-    "main.js": "https://daianalins.github.io/teste-prova-oficial/static/js/main.0964d1d6.js",
-    "index.html": "https://daianalins.github.io/teste-prova-oficial/index.html",
-    "main.e13dda25.css.map": "https://daianalins.github.io/teste-prova-oficial/static/css/main.e13dda25.css.map",
-    "main.0964d1d6.js.map": "https://daianalins.github.io/teste-prova-oficial/static/js/main.0964d1d6.js.map"
+    "main.css": "./static/css/main.d17d0b4c.css",
+    "main.js": "./static/js/main.f9f07152.js",
+    "index.html": "./index.html",
+    "main.d17d0b4c.css.map": "./static/css/main.d17d0b4c.css.map",
+    "main.f9f07152.js.map": "./static/js/main.f9f07152.js.map"
   },
   "entrypoints": [
-    "static/css/main.e13dda25.css",
-    "static/js/main.0964d1d6.js"
+    "static/css/main.d17d0b4c.css",
+    "static/js/main.f9f07152.js"
   ]
 }

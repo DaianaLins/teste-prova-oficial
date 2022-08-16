@@ -76,7 +76,7 @@ const Form = () => {
               setProgress(0);
               setTimeout( ()=>{
                 alert('Filme adicionado com sucesso')
-                window.location.href = '/'
+                window.location.href = '/teste-prova-oficial'
               },2500)
             })
             .catch((err) => {

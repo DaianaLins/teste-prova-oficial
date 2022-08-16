@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Sidebar from "../../components/sidebar";
 import { Container } from "./styles";
 import styles from './details.module.css'
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { firebaseApp } from "../firbase";
-import {BsPerson} from 'react-icons/bs'
+import { BsPerson } from 'react-icons/bs'
 
 const DetailsMovie = () => {
   const { id } = useParams()
@@ -23,9 +23,9 @@ const DetailsMovie = () => {
 
   const getFilmes = async () => {
     const data = await getDocs(filmeCollectionRef)
-    const comp = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })) 
-    comp.map((idN)=>{
-      if(idN.id == id) setFilme(idN)
+    const comp = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    comp.map((idN) => {
+      if (idN.id == id) setFilme(idN)
     })
   }
   useEffect(() => {
@@ -40,7 +40,7 @@ const DetailsMovie = () => {
           image: `${imgPath}${poster_path}`,
           releaseDate: release_date
         }
-        if(data.status_code) getFilmes()
+        if (data.status_code) getFilmes()
         setFilme(movie)
       })
 
@@ -49,34 +49,33 @@ const DetailsMovie = () => {
   const showSiderbar = () => setSidebar(!sidebar)
   return (
     <main >
-      <div onClick={showSiderbar} style={{ cursor: 'pointer', position:'absolute' }}><FaBars color='#d05d1b' size={40} /></div>
+      <div onClick={showSiderbar} style={{ cursor: 'pointer', position: 'absolute' }}><FaBars color='#d05d1b' size={40} /></div>
       {sidebar && <Sidebar active={setSidebar} />}
       <Container>
-      {filme.image ? (<img src={filme?.image} alt="" /> ) : 
-      (<img src={filme?.imageUrl} alt="" style={{margin: 0, marginTop: '50px', marginLeft: '250px'}} height={550} width={300} />)
-      }
+        {filme.image ? (<img src={filme?.image} alt="" />) :
+          (<img src={filme?.imageUrl} alt="" style={{ margin: 0, marginTop: '50px', marginLeft: '240px' }} height={530} />)
+        }
 
       </Container>
       <div className={styles.bannercontainer}>
-      <div className={styles.bannercontent}>
-        <h2 ><span style={{fontSize: '90px', color: '#d05d1b',  fontWeight: 900, fontFamily: 'sans-serif'}}>C</span> show</h2>
-        <h1 className={styles.bannertitle}>
-          {filme?.title }
-        </h1>
-        <div className={styles.bannerbuttonscontainer}>
-          <a href={`https://www.youtube.com/results?search_query=${filme?.title}`}><button className={styles.bannerbutton} >Assistir trailer</button></a>
-          <a href={`https://www.themoviedb.org/search?language=pt-BR&query=${filme?.title}`}><button className={styles.bannerbutton}>Mais informações</button></a> 
-        </div>
-        <div className={styles.bannerdescription}>
-          <h2>{truncate(filme.sinopse || filme.description, 150)}</h2>
+        <div className={styles.bannercontent}>
+          <h2 ><span style={{ fontSize: '90px', color: '#d05d1b', fontWeight: 900, fontFamily: 'sans-serif' }}>C</span> show</h2>
+          <h1 className={styles.bannertitle}>
+            {filme?.title}
+          </h1>
           <br />
-          <p><BsPerson/> Autor: {filme.author}</p>
+          <div className={styles.bannerbuttonscontainer}>
+            <a href={`https://www.youtube.com/results?search_query=${filme?.title}`}><button className={styles.bannerbutton} >Assistir trailer</button></a>
+            <a href={`https://www.themoviedb.org/search?language=pt-BR&query=${filme?.title}`}><button className={styles.bannerbutton}>Mais informações</button></a>
+          </div>
+          <div className={styles.bannerdescription}>
+            <h2>{truncate(filme.sinopse || filme.description, 150)}</h2>
+            <br />
+            {filme.author ? (<p><BsPerson /> Autor: {filme.author}</p>) : (null)}
+          </div>
         </div>
+      </div>
 
-        {/* adicionadoo por */}
-      </div>
-      </div>
-  
     </main >
   )
 }

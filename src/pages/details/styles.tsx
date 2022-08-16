@@ -5,7 +5,7 @@ export const Container = styled.div`
 
   img{
     height: 530px;
-    margin-left: 250px;  
+    margin-left: 230px;  
     display: flex;    
     margin-top: 65px;
     box-shadow: 0 0 20px 3px;
